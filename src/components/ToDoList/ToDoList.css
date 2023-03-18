@@ -1,0 +1,46 @@
+.list__item{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    justify-content: space-around;
+    width: 40%;
+    margin: 10px auto;
+    border:1px solid #282c34;
+    padding: 10px 20px;
+    border-radius:10px;
+}
+.list__item p.done{
+    text-decoration: line-through;
+}
+.list__item button.done {
+
+    display: inline-block;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+    line-height: 1.2rem;
+    font-weight: 900;
+    background: #007a5a;
+    padding: 8px 14px 9px;
+    font-size: 15px;
+    border-radius: 4px;
+    color: #fff;
+    height: 36px;
+    transition: all 75ms ease-in-out;
+}
+
+.list__item button.done:hover{
+    box-shadow: 0 1px 4px rgb(0 0 0 / 30%);
+}
+.NewToDo__field{
+    width: 40%;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: 7fr 1fr;
+    grid-column-gap: 30px;
+    padding: 0;
+}
+.NewToDo{
+    padding-top: 50px;
+    text-align: center;
+}
