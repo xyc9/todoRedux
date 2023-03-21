@@ -1,7 +1,11 @@
-import {createStore} from "redux";
-import listReducer from "./redusers/listReduser";
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import todoReducer from './redusers/todoReducer';
+import todoSaga from './sagas';
 
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(todoReducer, applyMiddleware(sagaMiddleware));
 
-const store = createStore(listReducer)
+sagaMiddleware.run(todoSaga);
 
-export default store
+export default store;
