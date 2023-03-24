@@ -26,7 +26,8 @@ function TodoList() {
 
     const handleScroll = (event) => {
         const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
-        if (scrollHeight - scrollTop === clientHeight){
+        const currentHeight = Math.round(scrollHeight - scrollTop);
+        if (currentHeight === clientHeight){
             setPage(page + 1 )
         }
     };

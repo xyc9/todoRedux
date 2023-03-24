@@ -22,7 +22,6 @@ function todoReducer(state = initialState, action) {
             return {
                 ...state,
                 todoList: [...state.todoList, ...action.payload.todoList],
-                page: state.page + 1,
             };
         case FETCH_TODO_LIST_FAILURE:
             return {
