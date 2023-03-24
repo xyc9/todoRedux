@@ -7,8 +7,9 @@ import {
 const initialState = {
     todoList: [],
     error: null,
-    page:1
+    page: 1,
 };
+
 
 function todoReducer(state = initialState, action) {
     switch (action.type) {
@@ -20,7 +21,8 @@ function todoReducer(state = initialState, action) {
         case FETCH_TODO_LIST_SUCCESS:
             return {
                 ...state,
-                todoList: action.payload.todoList,
+                todoList: [...state.todoList, ...action.payload.todoList],
+                page: state.page + 1,
             };
         case FETCH_TODO_LIST_FAILURE:
             return {

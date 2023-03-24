@@ -5,9 +5,10 @@ import {
     fetchTodoListFailure,
 } from './action';
 
-function* fetchTodoList({ page }) {
+function* fetchTodoList(item) {
+
     try {
-        const response = yield call(fetch, `https://jsonplaceholder.typicode.com/todos?_page=${page}&_limit=20`);
+        const response = yield call(fetch, `https://jsonplaceholder.typicode.com/todos?_page=${item.page}&_limit=10`);
         const data = yield response.json();
         yield put(fetchTodoListSuccess(data));
     } catch (error) {

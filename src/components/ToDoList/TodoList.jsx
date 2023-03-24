@@ -1,39 +1,70 @@
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {Checkbox, List, ListItem, ListItemText} from '@mui/material';
-import {fetchTodoListRequest, UPDATE_TODO_STATUS} from '../../action';
+import React, {useEffect, useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {
+    Checkbox,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+} from "@mui/material";
+import {fetchTodoListRequest, UPDATE_TODO_STATUS} from "../../action";
+
+import "./ToDoList.css"
+
 
 
 function TodoList() {
     const dispatch = useDispatch();
+    const [page, setPage] = useState(1);
     const todoList = useSelector((state) => state.todoList);
 
     useEffect(() => {
-        dispatch(fetchTodoListRequest());
-    }, [dispatch]);
+        dispatch(fetchTodoListRequest(page));
+    }, [dispatch, page]);
 
+    const handleScroll = (event) => {
+        const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
+        if (scrollHeight - scrollTop === clientHeight){
+            setPage(page + 1 )
+        }
+    };
 
-    const updateStatus = (id, completed) => {
+    const handleChangeStatus = (item) => {
         return {
-            type: UPDATE_TODO_STATUS, id: id, completed: !completed
+            type: UPDATE_TODO_STATUS, id: item.id, completed: !item.completed
         }
     }
-
-    return (<>
-
-            <List dense sx={{width: '30%', bgcolor: "background.paper", margin: "0 auto"}}>
-                {todoList.map((item) => (
-                    <ListItem onClick={() => dispatch(updateStatus(item.id, item.completed))} key={item.id}
-                              sx={{margin: '10px', border: "1px solid black", cursor: "pointer"}}>
-                        <Checkbox checked={item.completed}/>
-                        <ListItemText sx={item.completed ? {textDecoration: "line-through"} : null}
-                                      primary={item.title}/>
-                    </ListItem>
-                ))}
-
-
-            </List>
-        </>
+    return (
+        <TableContainer className="table__container"
+            onScroll={handleScroll}
+        >
+            <Table sx={{minWidth: 650}} stickyHeader>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Title</TableCell>
+                        <TableCell align="right">Completed</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {todoList.map((item) => (
+                        <TableRow
+                            key={item.id + 99999999}
+                            sx={{cursor: "pointer"}}
+                            onClick={() => dispatch(handleChangeStatus(item))}
+                        >
+                            <TableCell component="th" scope="row" className={item.completed ? "doneTodo" : ""}>
+                                <p className="table__title">{item.title}</p>
+                            </TableCell>
+                            <TableCell align="right">
+                                <Checkbox checked={item.completed}/>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 }
 
