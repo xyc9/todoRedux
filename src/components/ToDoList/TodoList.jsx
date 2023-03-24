@@ -50,7 +50,7 @@ function TodoList() {
                 <TableBody>
                     {todoList.map((item) => (
                         <TableRow
-                            key={item.id + 99999999}
+                            key={item.id}
                             sx={{cursor: "pointer"}}
                             onClick={() => dispatch(handleChangeStatus(item))}
                         >
